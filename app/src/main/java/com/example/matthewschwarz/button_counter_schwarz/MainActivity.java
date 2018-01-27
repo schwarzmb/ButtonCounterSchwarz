@@ -11,7 +11,6 @@ public class MainActivity extends AppCompatActivity {
     private Button addingButton;
     private Button subtractingButton;
     private Button resetCountButton;
-    private TextView currentValue;
     private TextView countValue;
     int counter = 0;
 
@@ -20,14 +19,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        currentValue = findViewById(R.id.currentValDisplay);
-        //currentValue.
-        //countValue.setText(String.valueOf(counter));
         countValue = findViewById(R.id.startValue);
+        if(savedInstanceState != null){
+            counter = Integer.parseInt(savedInstanceState.getString("currValue"));
+            countValue.setText(String.valueOf(counter));
+        }
         countValue.setText(String.valueOf(counter));
         addingButton = findViewById(R.id.adding);
-        //subtractingButton = findViewById(R.id.subtract);
-        //resetCountButton = findViewById(R.id.reset);
 
         addingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,5 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("currValue", countValue.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        counter = Integer.parseInt(savedInstanceState.getString("currValue"));
     }
 }
